@@ -1,18 +1,19 @@
 // db.js
-require('dotenv').config(); // Make sure this is at the top
+require('dotenv').config(); // Load environment variables
 
 const mysql = require('mysql2');
-require('dotenv').config();
 
+// ✅ Create connection and store it in `db`
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,       // mysql.railway.internal
-  user: process.env.DB_USER,       // root
+  host: process.env.DB_HOST,       // e.g., gondola.proxy.rlwy.net
+  user: process.env.DB_USER,       // e.g., root
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,   // railway
+  database: process.env.DB_NAME,   // e.g., railway
   port: process.env.DB_PORT || 3306,
 });
 
-connection.connect((err) => {
+// ✅ Use `db.connect` instead of `connection.connect`
+db.connect((err) => {
   if (err) {
     console.error('❌ MySQL connection failed:', err.message);
   } else {
@@ -20,4 +21,5 @@ connection.connect((err) => {
   }
 });
 
-module.exports = connection;
+// ✅ Export the `db` object
+module.exports = db;
