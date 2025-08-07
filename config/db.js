@@ -3,7 +3,7 @@ require('dotenv').config(); // Load environment variables
 
 const mysql = require('mysql2');
 
-// ✅ Create connection and store it in `db`
+// ✅ Create promise-based connection
 const db = mysql.createConnection({
   host: process.env.DB_HOST,       // e.g., gondola.proxy.rlwy.net
   user: process.env.DB_USER,       // e.g., root
@@ -12,7 +12,7 @@ const db = mysql.createConnection({
   port: process.env.DB_PORT || 3306,
 });
 
-// ✅ Use `db.connect` instead of `connection.connect`
+// ✅ Optional: Log if connected (callback-style)
 db.connect((err) => {
   if (err) {
     console.error('❌ MySQL connection failed:', err.message);
@@ -21,5 +21,5 @@ db.connect((err) => {
   }
 });
 
-// ✅ Export the `db` object
-module.exports = db;
+// ✅ Export promise-wrapped version
+module.exports = db.promise();
